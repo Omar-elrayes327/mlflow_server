@@ -1,0 +1,53 @@
+# Python
+pycache/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.venv/
+./classifier/.ipynb_checkpoints/
+# Environment variables
+.env
+.env.*
+./.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+
+# ======================
+# MLflow
+# ======================
+
+# MLflow runs temporary files
+mlruns/*
+
+# Ignore logs
+*.log
+
+
+# ======================
+# DO NOT IGNORE THESE
+# ======================
+# Keep:
+# mlflow/mlflow.db
+# mlflow/mlartifacts/
+# mlflow/models/
+
+# ======================
+# Cache
+# ======================
+.cache/
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+

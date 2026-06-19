@@ -2,19 +2,57 @@ import mlflow
 import mlflow.tensorflow
 import tensorflow as tf
 from pathlib import Path
+import os
+
+
 # ======================
-# SETUP
+# MLflow Config
 # ======================
-mlflow.set_tracking_uri("http://127.0.0.1:5000")
-mlflow.set_experiment("skin_cancer_experiment_v2")
-model_path = Path(r"C:\Users\Mega Store\backend\mlflow\models\skin_cancer_detection_final.keras")
+
+MLFLOW_URI = os.getenv(
+    "MLFLOW_URI",
+    "https://YOUR-MLFLOW-URL.up.railway.app"
+)
+
+mlflow.set_tracking_uri(MLFLOW_URI)
+
+
+mlflow.set_experiment(
+    "skin_cancer_experiment_v2"
+)
+
+
+# ======================
+# Model Path
+# ======================
+
+model_path = Path(
+    "../models/skin_cancer_detection_final.keras"
+)
+
 
 if not model_path.exists():
-    raise FileNotFoundError(f"Model not found: {model_path}")
+    raise FileNotFoundError(
+        f"Model not found: {model_path}"
+    )
 
-model = tf.keras.models.load_model(model_path,compile=False)
 
-print(mlflow.get_tracking_uri())
+model = tf.keras.models.load_model(
+    model_path,
+    compile=False
+)
+
+
+print(
+    "Tracking URI:",
+    mlflow.get_tracking_uri()
+)
+
+
+# ======================
+# Register
+# ======================
+
 with mlflow.start_run():
 
     mlflow.tensorflow.log_model(
@@ -22,7 +60,11 @@ with mlflow.start_run():
         name="model"
     )
 
+
     mlflow.register_model(
         f"runs:/{mlflow.active_run().info.run_id}/model",
         "skin_cancer_classifier"
     )
+
+
+print("Classifier registered successfully")
